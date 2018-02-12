@@ -4,7 +4,7 @@ include_directories(${complx-tools_SOURCE_DIR}/logging)
 set(SRC_LC3TEST
     main.cpp
     XmlTestParser.cpp
-)
+        JSONResultExporter.cpp JSONResultExporter.hpp)
 
 add_executable(
     lc3test
