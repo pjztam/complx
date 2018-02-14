@@ -1,5 +1,5 @@
-option(ENABLE_BWLCD "Enable the Black White LCD Plugin" ON)
-option(ENABLE_COLORLCD "Enable the Color LCD Plugin" ON)
+option(ENABLE_BWLCD "Enable the Black White LCD Plugin" OFF)
+option(ENABLE_COLORLCD "Enable the Color LCD Plugin" OFF)
 option(ENABLE_PINGER "Enable the Pinger Plugin" ON)
 include_directories(${complx-tools_SOURCE_DIR}/liblc3)
 

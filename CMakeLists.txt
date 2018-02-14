@@ -6,7 +6,7 @@ project(complx-tools)
 # Add code coverage stuff.
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-option(ENABLE_PLUGINS "Enable Official Plugins" OFF)
+option(ENABLE_PLUGINS "Enable Official Plugins" ON)
 option(ENABLE_LC3EDIT "Build lc3edit" OFF)
 option(ENABLE_COMP "Build comp" OFF)
 option(ENABLE_COMPLX "Build complx" OFF)
