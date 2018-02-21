@@ -2,6 +2,7 @@
 // Created by Cem Gokmen on 2/12/18.
 //
 
+#include <iostream>
 #include "JSONResultExporter.hpp"
 
 void lc3_write_json_suite_report(std::stringstream& oss, lc3_test_suite& suite, const std::string& filename) {
@@ -17,15 +18,54 @@ void lc3_write_json_suite_report(std::stringstream& oss, lc3_test_suite& suite, 
 
         lc3_test& test = suite.tests[i];
         lc3_get_test_report(name, score, max_score, output, test);
+        json output2 = lc3_get_sub_tests_from_test(test);
 
-        arr[i] = {{"name", name}, {"score", score}, {"max_score", max_score}, {"output", output.str()}};
+        arr[i] = {
+                {"name", name},
+                {"score", score},
+                {"max_score", max_score},
+                {"passed", test.passed},
+                {"output2", output2 },
+                {"has_halted", test.has_halted},
+                {"has_halted_normally", test.has_halted_normally},
+                {"warning", test.warning},
+                {"output", output.str()}
+        };
     }
 
     json j = {
+            {"filename", filename},
+            {"points", suite.points},
+            {"max_points", suite.max_points},
+            {"passed", suite.passed},
             {"tests", arr}
     };
 
     oss << j.dump(4);
+}
+
+json lc3_get_sub_tests_from_test(lc3_test& test) {
+    json arr = json::array();
+
+    for(uint32_t i = 0; i < test.output.size(); i++) {
+        lc3_test_output& test_output = test.output[i];
+
+        // build sub test object
+        json x;
+        x["i"] = i;
+        x["input_string"] = lc3_test_output_string(test_output);
+        x["passed"] = test_output.passed;
+        x["earned"] = test_output.earned;
+        x["points"] = test_output.points;
+        x["expected"] = test_output.expected;
+        x["actual"] = test_output.actual;
+        x["extra_output"] = test_output.extra_output;
+
+        // push object onto return list
+        arr.push_back(x);
+    }
+
+    return arr;
 }
 
 void lc3_get_test_report(std::string& name, int& score, int& max_score, std::stringstream& output, lc3_test& test) {
