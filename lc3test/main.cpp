@@ -54,7 +54,7 @@ int main(int argc, char** argv)
             runs = (unsigned int) atoi(arg.substr(arg.find("=") + 1).c_str());
         else
         {
-            printf("Invalid param %s passed in!", arg.c_str());
+            fprintf(stderr, "Invalid param %s passed in!", arg.c_str());
             return EXIT_FAILURE;
         }
     }
@@ -63,13 +63,13 @@ int main(int argc, char** argv)
     {
         if (!XmlTestParser().LoadTestSuite(suite, xmlfile))
         {
-            printf("Xml file not found or parse errors found\n");
+            fprintf(stderr, "Xml file not found or parse errors found\n");
             return EXIT_FAILURE;
         }
     }
     catch (XmlTestParserException x)
     {
-        printf("%s\n", x.what().c_str());
+        fprintf(stderr, "%s\n", x.what().c_str());
         return EXIT_FAILURE;
     }
 
@@ -86,12 +86,12 @@ int main(int argc, char** argv)
         }
         catch (const char* x)
         {
-            printf("%s\n", x);
+            fprintf(stderr, "%s\n", x);
             return EXIT_FAILURE;
         }
         catch (std::string x)
         {
-            printf("%s\n", x.c_str());
+            fprintf(stderr, "%s\n", x.c_str());
             return EXIT_FAILURE;
         }
 
