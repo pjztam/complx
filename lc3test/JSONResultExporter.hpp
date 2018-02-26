@@ -13,6 +13,6 @@ using json = nlohmann::json;
 
 void lc3_write_json_suite_report(std::stringstream& oss, lc3_test_suite& suite, const std::string& filename);
 
-void lc3_get_test_report(std::string& name, int& score, int& max_score, std::stringstream& output, lc3_test& test);
+void lc3_get_test_report(json &j, lc3_test &test);
 
 #endif //COMPLX_TOOLS_JSONRESULTEXPORTER_H
