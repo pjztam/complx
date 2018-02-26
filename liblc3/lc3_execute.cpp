@@ -19,6 +19,7 @@ const char* WARNING_MESSAGES[LC3_WARNINGS] =
     "Turning off machine via the MCR register",
     "PUTSP called with invalid address x%04x",
     "PUTSP found an unexpected NUL byte at address x%04x",
+    "Subroutine at x%04x number params not given, test results may be incorrect!"
 };
 
 lc3_instr lc3_decode(lc3_state& state, unsigned short data)
@@ -221,7 +222,8 @@ const lc3_state_change lc3_execute(lc3_state& state, lc3_instr instruction)
                     if (state.subroutines.find(state.pc) != state.subroutines.end())
                         num_params = state.subroutines[state.pc].num_params;
                     else
-                        fprintf(stderr, "Subroutine at x%04x number params not given, test results may be incorrect!\n", state.pc);
+                        lc3_warning(state, LC3_SUBROUTINE_MISSING_NUM_PARAMS, state.mem[state.pc], 0);
+                        //fprintf(stderr, "Subroutine at x%04x number params not given, test results may be incorrect!\n", state.pc);
                     for (unsigned int i = 0; i < num_params; i++)
                         call_info.params.push_back(state.mem[call_info.r6 + i]);
 
